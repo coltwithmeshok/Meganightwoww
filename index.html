@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кнопки в форме Z</title>
+    <title>Звуковые кнопки</title>
     <style>
         body {
             position: relative;
@@ -11,21 +11,15 @@
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
         }
-        .button-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
         button {
             display: block;
-            margin: 5px;
+            margin: 10px;
             padding: 10px 15px;
             font-size: 16px;
         }
-        .cross {
+        .zov {
             position: absolute;
-            color: rgba(0, 0, 0, 0.1);
+            color: black;
             font-size: 100px;
             pointer-events: none; /* чтобы текст не мешал кликам по кнопкам */
         }
@@ -33,7 +27,7 @@
 </head>
 <body>
 
-    <div class="button-container">
+    <div id="buttons">
         <button onclick="playSound(1)">Кнопка 1</button>
         <button onclick="playSound(2)">Кнопка 2</button>
         <button onclick="playSound(3)">Кнопка 3</button>
@@ -58,10 +52,18 @@
     <audio id="sound10" src="sound10.mp3"></audio>
 
     <script>
+        let currentAudio = null; // Переменная для хранения текущего воспроизводимого аудио
+
         function playSound(buttonNumber) {
-            const audio = document.getElementById(`sound${buttonNumber}`);
-            audio.currentTime = 0; // сброс времени воспроизведения
-            audio.play();
+            // Остановить текущее аудио, если оно воспроизводится
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0; // Сброс времени воспроизведения
+            }
+            
+            // Получаем новое аудио и воспроизводим его
+            currentAudio = document.getElementById(`sound${buttonNumber}`);
+            currentAudio.play();
         }
 
         // Функция для создания надписей "ZOV" на фоне
@@ -69,7 +71,7 @@
             const body = document.body;
             for (let i = 0; i < 50; i++) {
                 const zovText = document.createElement('div');
-                zovText.className = 'cross';
+                zovText.className = 'zov';
                 zovText.innerText = 'ZOV';
                 zovText.style.left = Math.random() * window.innerWidth + 'px';
                 zovText.style.top = Math.random() * window.innerHeight + 'px';
@@ -78,34 +80,11 @@
         }
 
         // Создаем надписи "ZOV" при загрузке страницы
-        window.onload = function() {
-            createZOVs();
-            positionButtons();
-        };
+        window.onload = createZOVs;
 
-        // Функция для позиционирования кнопок в форме буквы "Z"
-        function positionButtons() {
-            const buttons = document.querySelectorAll('.button-container button');
-            const positions = [
-                {top: '10%', left: '0%'},   // Кнопка 1
-                {top: '20%', left: '25%'},  // Кнопка 2
-                {top: '30%', left: '50%'},  // Кнопка 3
-                {top: '40%', left: '75%'},  // Кнопка 4
-                {top: '50%', left: '100%'}, // Кнопка 5
-                {top: '60%', left: '75%'},  // Кнопка 6
-                {top: '70%', left: '50%'},  // Кнопка 7
-                {top: '80%', left: '25%'},  // Кнопка 8
-                {top: '90%', left: '0%'},   // Кнопка 9
-                {top: '100%', left: '0%'}   // Кнопка 10
-            ];
-
-            buttons.forEach((button, index) => {
-                button.style.position = 'absolute';
-                button.style.top = positions[index].top;
-                button.style.left = positions[index].left;
-            });
-        }
     </script>
 
+</body>
+</html>
 </body>
 </html>
