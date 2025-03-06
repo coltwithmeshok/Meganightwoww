@@ -3,29 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Звуковые кнопки</title>
+    <title>Кнопки в форме Z</title>
     <style>
         body {
             position: relative;
             overflow: hidden;
             background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
         }
-        .cross {
+        .button-container {
             position: absolute;
-            color: red;
-            font-size: 20px;
-            pointer-events: none; /* чтобы крестики не мешали кликам по кнопкам */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         button {
+            display: block;
             margin: 5px;
             padding: 10px 15px;
             font-size: 16px;
+        }
+        .cross {
+            position: absolute;
+            color: rgba(0, 0, 0, 0.1);
+            font-size: 100px;
+            pointer-events: none; /* чтобы текст не мешал кликам по кнопкам */
         }
     </style>
 </head>
 <body>
 
-    <div id="buttons">
+    <div class="button-container">
         <button onclick="playSound(1)">Кнопка 1</button>
         <button onclick="playSound(2)">Кнопка 2</button>
         <button onclick="playSound(3)">Кнопка 3</button>
@@ -56,21 +64,47 @@
             audio.play();
         }
 
-        // Функция для создания крестиков на фоне
-        function createCrosses() {
+        // Функция для создания надписей "ZOV" на фоне
+        function createZOVs() {
             const body = document.body;
-            for (let i = 0; i < 100; i++) {
-                const cross = document.createElement('div');
-                cross.className = 'cross';
-                cross.innerText = '✖';
-                cross.style.left = Math.random() * window.innerWidth + 'px';
-                cross.style.top = Math.random() * window.innerHeight + 'px';
-                body.appendChild(cross);
+            for (let i = 0; i < 50; i++) {
+                const zovText = document.createElement('div');
+                zovText.className = 'cross';
+                zovText.innerText = 'ZOV';
+                zovText.style.left = Math.random() * window.innerWidth + 'px';
+                zovText.style.top = Math.random() * window.innerHeight + 'px';
+                body.appendChild(zovText);
             }
         }
 
-        // Создаем крестики при загрузке страницы
-        window.onload = createCrosses;
+        // Создаем надписи "ZOV" при загрузке страницы
+        window.onload = function() {
+            createZOVs();
+            positionButtons();
+        };
+
+        // Функция для позиционирования кнопок в форме буквы "Z"
+        function positionButtons() {
+            const buttons = document.querySelectorAll('.button-container button');
+            const positions = [
+                {top: '10%', left: '0%'},   // Кнопка 1
+                {top: '20%', left: '25%'},  // Кнопка 2
+                {top: '30%', left: '50%'},  // Кнопка 3
+                {top: '40%', left: '75%'},  // Кнопка 4
+                {top: '50%', left: '100%'}, // Кнопка 5
+                {top: '60%', left: '75%'},  // Кнопка 6
+                {top: '70%', left: '50%'},  // Кнопка 7
+                {top: '80%', left: '25%'},  // Кнопка 8
+                {top: '90%', left: '0%'},   // Кнопка 9
+                {top: '100%', left: '0%'}   // Кнопка 10
+            ];
+
+            buttons.forEach((button, index) => {
+                button.style.position = 'absolute';
+                button.style.top = positions[index].top;
+                button.style.left = positions[index].left;
+            });
+        }
     </script>
 
 </body>
