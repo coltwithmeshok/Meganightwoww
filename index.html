@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кнопки в форме круга</title>
+    <title>Кнопки со звуками</title>
     <style>
         body {
             position: relative;
@@ -11,24 +11,12 @@
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
         }
-        #button-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px; /* Установите диаметр круга */
-            height: 300px; /* Установите диаметр круга */
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
         button {
-            position: absolute;
+            margin: 10px;
             padding: 10px 15px;
             font-size: 16px;
         }
-        .sun-symbol {
+        .sun-symbol, .egg-symbol {
             position: absolute;
             color: rgba(0, 0, 0, 0.1);
             font-size: 50px;
@@ -38,8 +26,17 @@
 </head>
 <body>
 
-    <div id="button-container">
-        <!-- Кнопки будут позиционироваться с помощью JavaScript -->
+    <div id="buttons">
+        <button onclick="playSound(1)">Кнопка 1</button>
+        <button onclick="playSound(2)">Кнопка 2</button>
+        <button onclick="playSound(3)">Кнопка 3</button>
+        <button onclick="playSound(4)">Кнопка 4</button>
+        <button onclick="playSound(5)">Кнопка 5</button>
+        <button onclick="playSound(6)">Кнопка 6</button>
+        <button onclick="playSound(7)">Кнопка 7</button>
+        <button onclick="playSound(8)">Кнопка 8</button>
+        <button onclick="playSound(9)">Кнопка 9</button>
+        <button onclick="playSound(10)">Кнопка 10</button>
     </div>
 
     <audio id="sound1" src="sound1.mp3"></audio>
@@ -68,43 +65,37 @@
             currentAudio.play();
         }
 
-        function positionButtons() {
-            const container = document.getElementById('button-container');
-            const buttons = [];
-            for (let i = 1; i <= 10; i++) {
-                const button = document.createElement('button');
-                button.innerText = `Кнопка ${i}`;
-                button.onclick = () => playSound(i);
-                buttons.push(button);
-                container.appendChild(button);
-            }
-
-            // Позиционирование кнопок в форме круга
-            const angleStep = (2 * Math.PI) / buttons.length;
-            buttons.forEach((button, index) => {
-                const angle = angleStep * index;
-                const x = Math.cos(angle) * 120; // радиус круга
-                const y = Math.sin(angle) * 120; // радиус круга
-                button.style.transform = `translate(${x}px, ${y}px)`;
-            });
-        }
-
         // Функция для создания символов буддийского солнца на фоне
         function createSunSymbols() {
             const body = document.body;
+            const sunSymbol = '☼'; // Символ буддийского солнца
             for (let i = 0; i < 50; i++) {
-                const sunSymbol = document.createElement('div');
-                sunSymbol.className = 'sun-symbol';
-                sunSymbol.innerText = '☼'; // Символ буддийского солнца
-                sunSymbol.style.left = Math.random() * window.innerWidth + 'px';
-                sunSymbol.style.top = Math.random() * window.innerHeight + 'px';
-                body.appendChild(sunSymbol);
+                const sunDiv = document.createElement('div');
+                sunDiv.className = 'sun-symbol';
+                sunDiv.innerText = sunSymbol;
+                sunDiv.style.left = Math.random() * window.innerWidth + 'px';
+                sunDiv.style.top = Math.random() * window.innerHeight + 'px';
+                body.appendChild(sunDiv);
+            }
+        }
+
+        // Функция для создания символов яйца на фоне
+        function createEggSymbols() {
+            const body = document.body;
+            const eggSymbol = '🥚'; // Символ яйца
+            for (let i = 0; i < 522; i++) {
+                const eggDiv = document.createElement('div');
+                eggDiv.className = 'egg-symbol';
+                eggDiv.innerText = eggSymbol;
+                eggDiv.style.left = Math.random() * window.innerWidth + 'px';
+                eggDiv.style.top = Math.random() * window.innerHeight + 'px';
+                body.appendChild(eggDiv);
             }
         }
 
         window.onload = function() {
-            positionButtons();
             createSunSymbols();
+            createEggSymbols();
         };
     </script>
 
