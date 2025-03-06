@@ -3,35 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сайт со звуками</title>
+    <title>Звуковые кнопки</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
+            position: relative;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+        .cross {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            pointer-events: none; /* чтобы крестики не мешали кликам по кнопкам */
         }
         button {
-            padding: 10px 20px;
+            margin: 5px;
+            padding: 10px 15px;
             font-size: 16px;
-            margin: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Нажмите на кнопку, чтобы услышать звук!</h1>
 
-    <button onclick="playSound('sound1.mp3')">Звук 1</button>
-    <button onclick="playSound('sound2.mp3')">Звук 2</button>
-    <button onclick="playSound('sound3.mp3')">Звук 3</button>
+    <div id="buttons">
+        <button onclick="playSound(1)">Кнопка 1</button>
+        <button onclick="playSound(2)">Кнопка 2</button>
+        <button onclick="playSound(3)">Кнопка 3</button>
+        <button onclick="playSound(4)">Кнопка 4</button>
+        <button onclick="playSound(5)">Кнопка 5</button>
+        <button onclick="playSound(6)">Кнопка 6</button>
+        <button onclick="playSound(7)">Кнопка 7</button>
+        <button onclick="playSound(8)">Кнопка 8</button>
+        <button onclick="playSound(9)">Кнопка 9</button>
+        <button onclick="playSound(10)">Кнопка 10</button>
+    </div>
 
-    <audio id="audio" src=""></audio>
+    <audio id="sound1" src="sound1.mp3"></audio>
+    <audio id="sound2" src="sound2.mp3"></audio>
+    <audio id="sound3" src="sound3.mp3"></audio>
+    <audio id="sound4" src="sound4.mp3"></audio>
+    <audio id="sound5" src="sound5.mp3"></audio>
+    <audio id="sound6" src="sound6.mp3"></audio>
+    <audio id="sound7" src="sound7.mp3"></audio>
+    <audio id="sound8" src="sound8.mp3"></audio>
+    <audio id="sound9" src="sound9.mp3"></audio>
+    <audio id="sound10" src="sound10.mp3"></audio>
 
     <script>
-        function playSound(soundFile) {
-            const audio = document.getElementById('audio');
-            audio.src = soundFile;
+        function playSound(buttonNumber) {
+            const audio = document.getElementById(`sound${buttonNumber}`);
+            audio.currentTime = 0; // сброс времени воспроизведения
             audio.play();
         }
+
+        // Функция для создания крестиков на фоне
+        function createCrosses() {
+            const body = document.body;
+            for (let i = 0; i < 100; i++) {
+                const cross = document.createElement('div');
+                cross.className = 'cross';
+                cross.innerText = '✖';
+                cross.style.left = Math.random() * window.innerWidth + 'px';
+                cross.style.top = Math.random() * window.innerHeight + 'px';
+                body.appendChild(cross);
+            }
+        }
+
+        // Создаем крестики при загрузке страницы
+        window.onload = createCrosses;
     </script>
+
 </body>
 </html>
